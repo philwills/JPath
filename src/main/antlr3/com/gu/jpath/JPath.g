@@ -17,10 +17,21 @@ scope { List identifiers; }
 	;
 
 queryItem
-	:	(i=IDENTIFIER
+	:	(i=identifier ARRAY_ACCESS_START d=digit ARRAY_ACCESS_END)
+	{ $query::identifiers.add(new ArrayAccessQueryItem(i, d)); }
 	|
-	)
-	{ $query::identifiers.add(new DirectAccessQueryItem($i.getText())); }
+	(i=identifier)
+	{ $query::identifiers.add(new DirectAccessQueryItem(i)); }
+	;
+
+identifier returns [String id]
+	:	i=IDENTIFIER { $id = $i.getText(); }
+	|
+	;
+
+digit returns [Integer digit]
+	:	d=DIGIT { $digit = new Integer($d.getText()); }
+	|
 	;
 
 IDENTIFIER : ('a'..'z'|'A'..'Z'|'-'|'_')+;
