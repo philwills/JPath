@@ -5,19 +5,22 @@ package com.gu.jpath;
 }
 
 query returns[List<String> result]
+scope { List identifiers; }
 @init {
-	result = new ArrayList<String>();
+	$query::identifiers = new ArrayList<String>();
 }
 	:(
-		identifierResult=identifier {result.add(identifierResult);}
-		( OPERATOR identifierResult=identifier {result.add(identifierResult);} )*
+		identifier (OPERATOR identifier)*
 		EOF
 	 )
+	 { $result = $query::identifiers; }
 	;
 
-identifier returns[String parsedItem]
-	:	i=IDENTIFIER { $parsedItem = i.getText(); }
+identifier
+	:	(i=IDENTIFIER
 	|
+	)
+	{ $query::identifiers.add($i.getText()); }
 	;
 
 IDENTIFIER : ('a'..'z'|'A'..'Z'|'-'|'_')+;

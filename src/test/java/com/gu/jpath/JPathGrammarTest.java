@@ -14,14 +14,7 @@ import java.util.List;
 
 public class JPathGrammarTest {
 
-	@Test public void testSingleWord() throws IOException, RecognitionException {
-		JPathParser parser = createParser("stuff");
-		String result = parser.identifier();
-		assertThat(result, equalTo("stuff"));
-	}
-
-	@Test
-    public void testMultipleWords() throws IOException, RecognitionException {
+	@Test public void shouldSplitOnDots() throws IOException, RecognitionException {
         JPathParser parser = createParser("red.green.blue");
         List<String> methods = parser.query();
         assertThat(methods.size(), equalTo(3));
@@ -29,6 +22,10 @@ public class JPathGrammarTest {
 		assertThat(methods.get(1), equalTo("green"));
 		assertThat(methods.get(2), equalTo("blue"));
     }
+
+	@Test public void shouldDistinguishArrayAccess() throws IOException, RecognitionException {
+
+	}
 
 	 private JPathParser createParser(String testString) throws IOException {
     	CharStream stream = new ANTLRStringStream(testString);
