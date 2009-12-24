@@ -4,25 +4,28 @@ grammar JPath;
 package com.gu.jpath;
 }
 
-query returns[List<String> result]
+query returns[List<QueryItem> result]
 scope { List identifiers; }
 @init {
-	$query::identifiers = new ArrayList<String>();
+	$query::identifiers = new ArrayList<QueryItem>();
 }
 	:(
-		identifier (OPERATOR identifier)*
+		queryItem (OPERATOR queryItem)*
 		EOF
 	 )
 	 { $result = $query::identifiers; }
 	;
 
-identifier
+queryItem
 	:	(i=IDENTIFIER
 	|
 	)
-	{ $query::identifiers.add($i.getText()); }
+	{ $query::identifiers.add(new DirectAccessQueryItem($i.getText())); }
 	;
 
 IDENTIFIER : ('a'..'z'|'A'..'Z'|'-'|'_')+;
 OPERATOR: '.';
+ARRAY_ACCESS_START: '[';
+DIGIT: '0'..'9'+;
+ARRAY_ACCESS_END: ']';
 EOF: '<EOF>';

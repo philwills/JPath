@@ -16,15 +16,20 @@ public class JPathGrammarTest {
 
 	@Test public void shouldSplitOnDots() throws IOException, RecognitionException {
         JPathParser parser = createParser("red.green.blue");
-        List<String> methods = parser.query();
+        List<QueryItem> methods = parser.query();
         assertThat(methods.size(), equalTo(3));
-		assertThat(methods.get(0), equalTo("red"));
-		assertThat(methods.get(1), equalTo("green"));
-		assertThat(methods.get(2), equalTo("blue"));
+		assertThat(methods.get(0).toString(), equalTo("red"));
+		assertThat(methods.get(1).toString(), equalTo("green"));
+		assertThat(methods.get(2).toString(), equalTo("blue"));
     }
 
 	@Test public void shouldDistinguishArrayAccess() throws IOException, RecognitionException {
-
+		JPathParser parser = createParser("red.green[2].blue");
+        List<QueryItem> methods = parser.query();
+        assertThat(methods.size(), equalTo(3));
+		assertThat(methods.get(0).toString(), equalTo("red"));
+		assertThat(methods.get(1).toString(), equalTo("green[2]"));
+		assertThat(methods.get(2).toString(), equalTo("blue"));
 	}
 
 	 private JPathParser createParser(String testString) throws IOException {
