@@ -13,7 +13,7 @@
     <version>0.1-SNAPSHOT</version>
 
 	<build>
-		<sourceDirectory>target/generated-sources</sourceDirectory>
+		<sourceDirectory>target/generated-sources/antlr3</sourceDirectory>
 		<testResources>
 			<testResource>
 				<directory>src/test/java</directory>

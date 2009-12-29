@@ -4,6 +4,8 @@ grammar JPath;
 package com.gu.jpath;
 }
 
+@lexer::header{ package com.gu.jpath; } 
+
 query returns[List<QueryToken> result]
 scope { List identifiers; }
 @init {
