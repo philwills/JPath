@@ -6,7 +6,7 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
-import static org.junit.matchers.JUnitMatchers.*;
+
 import org.junit.Test;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ public class JPathGrammarTest {
 
 	@Test public void shouldSplitOnDots() throws IOException, RecognitionException {
         JPathParser parser = createParser("red.green.blue");
-        List<QueryItem> methods = parser.query();
+        List<QueryToken> methods = parser.query();
         assertThat(methods.size(), equalTo(3));
 		assertThat(methods.get(0).toString(), equalTo("red"));
 		assertThat(methods.get(1).toString(), equalTo("green"));
@@ -25,7 +25,7 @@ public class JPathGrammarTest {
 
 	@Test public void shouldDistinguishArrayAccess() throws IOException, RecognitionException {
 		JPathParser parser = createParser("red.green[2].blue");
-        List<QueryItem> methods = parser.query();
+        List<QueryToken> methods = parser.query();
         assertThat(methods.size(), equalTo(3));
 		assertThat(methods.get(0).toString(), equalTo("red"));
 		assertThat(methods.get(1).toString(), equalTo("green[2]"));

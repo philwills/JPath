@@ -4,24 +4,24 @@ grammar JPath;
 package com.gu.jpath;
 }
 
-query returns[List<QueryItem> result]
+query returns[List<QueryToken> result]
 scope { List identifiers; }
 @init {
-	$query::identifiers = new ArrayList<QueryItem>();
+	$query::identifiers = new ArrayList<QueryToken>();
 }
 	:(
-		queryItem (OPERATOR queryItem)*
+		queryToken (OPERATOR queryToken)*
 		EOF
 	 )
 	 { $result = $query::identifiers; }
 	;
 
-queryItem
+queryToken
 	:	(i=identifier ARRAY_ACCESS_START d=digit ARRAY_ACCESS_END)
-	{ $query::identifiers.add(new ArrayAccessQueryItem(i, d)); }
+	{ $query::identifiers.add(new ArrayAccessQueryToken(i, d)); }
 	|
 	(i=identifier)
-	{ $query::identifiers.add(new DirectAccessQueryItem(i)); }
+	{ $query::identifiers.add(new DirectAccessQueryToken(i)); }
 	;
 
 identifier returns [String id]
