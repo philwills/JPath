@@ -11,17 +11,17 @@ public class JPathTest {
 	@Test public void shouldFindJSONContentBasedOnPath() {
 		JPath jPath = new JPath(getCheeseStream());
 
-		assertThat(jPath.forPath("search.count").getAsInt(), equalTo(7129));
+		assertThat(jPath.forPath("glossary.title").getAsString(), equalTo("example glossary"));
 	}
 
 	@Test public void shouldFindJSONContentInArrayElement() {
 		JPath jPath = new JPath(getCheeseStream());
 
-		assertThat(jPath.forPath("search.results[0].id").getAsInt(), equalTo(356272128));
+		assertThat(jPath.forPath("glossary.GlossDiv.GlossList.GlossEntry.GlossDef.GlossSeeAlso[1]").getAsString(), equalTo("XML"));
 	}
 
 	private InputStream getCheeseStream() {
-		InputStream jsonStream = JPathTest.class.getResourceAsStream("cheese.json");
+		InputStream jsonStream = JPathTest.class.getResourceAsStream("example.json");
 		return jsonStream;
 	}
 }
