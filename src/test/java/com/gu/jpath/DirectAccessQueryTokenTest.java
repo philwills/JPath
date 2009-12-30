@@ -14,6 +14,6 @@ public class DirectAccessQueryTokenTest {
 
 		DirectAccessQueryToken queryToken = new DirectAccessQueryToken("number");
 
-		assertThat(queryToken.navigate(jsonObject).getAsInt(), equalTo(42));
+		assertThat(queryToken.navigate(jsonObject).get(0).getAsInt(), equalTo(42));
 	}
 }

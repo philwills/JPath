@@ -19,7 +19,11 @@ scope { List identifiers; }
 	;
 
 queryToken
-	:	(i=identifier ARRAY_ACCESS_START d=digit ARRAY_ACCESS_END)
+	:
+	(i=identifier ARRAY_ACCESS_START STAR ARRAY_ACCESS_END)
+	{ $query::identifiers.add(new WholeArrayQueryToken(i)); }
+	|	
+	(i=identifier ARRAY_ACCESS_START d=digit ARRAY_ACCESS_END)
 	{ $query::identifiers.add(new ArrayAccessQueryToken(i, d)); }
 	|
 	(i=identifier)
@@ -40,5 +44,6 @@ IDENTIFIER : ('a'..'z'|'A'..'Z'|'-'|'_')+;
 OPERATOR: '.';
 ARRAY_ACCESS_START: '[';
 DIGIT: '0'..'9'+;
+STAR: '*';
 ARRAY_ACCESS_END: ']';
 EOF: '<EOF>';
