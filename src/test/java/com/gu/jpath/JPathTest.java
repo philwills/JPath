@@ -16,30 +16,38 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 public class JPathTest {
-	private JsonElement exampleRoot;
+	private JsonElement glossaryRoot;
+	private JsonElement menuRoot;
 	
 	@Test public void shouldFindJSONContentBasedOnPath() {
 		JPath jPath = new JPath("glossary.title");
 
-		assertThat(jPath.elementFrom(exampleRoot).getAsString(), equalTo("example glossary"));
+		assertThat(jPath.elementFrom(glossaryRoot).getAsString(), equalTo("example glossary"));
 	}
 
 	@Test public void shouldFindJSONContentInArrayElement() {
 		JPath jPath = new JPath("glossary.GlossDiv.GlossList.GlossEntry.GlossDef.GlossSeeAlso[1]");
 
-		assertThat(jPath.elementFrom(exampleRoot).getAsString(), equalTo("XML"));
+		assertThat(jPath.elementFrom(glossaryRoot).getAsString(), equalTo("XML"));
 	}
 	
 	@Test public void shouldFindAllJSONContentInArrayElement() {
 		JPath jPath = new JPath("glossary.GlossDiv.GlossList.GlossEntry.GlossDef.GlossSeeAlso[*]");
 
-		assertThat(jPath.elementsFrom(exampleRoot), equalTo(Arrays.asList((JsonElement)new JsonPrimitive("GML"), new JsonPrimitive("XML"))));
+		assertThat(jPath.elementsFrom(glossaryRoot), equalTo(Arrays.asList((JsonElement)new JsonPrimitive("GML"), new JsonPrimitive("XML"))));
+	}
+	
+	@Test public void shouldFindAllElementsFromNodesInsideArrayElements() {
+		JPath jPath = new JPath("menu.popup.menuitem[*].value");
+
+		assertThat(jPath.elementsFrom(menuRoot), equalTo(Arrays.asList((JsonElement)new JsonPrimitive("New"), new JsonPrimitive("Open"), new JsonPrimitive("Close"))));	
 	}
 
-	@Before
-	public void buildExampleRoot() {
-		InputStream jsonStream = JPathTest.class.getResourceAsStream("example.json");
+	@Before	public void buildJSON() {
 		JsonParser parser = new JsonParser();
-		exampleRoot = parser.parse(new InputStreamReader(jsonStream));
+		InputStream glossaryJsonStream = JPathTest.class.getResourceAsStream("glossary.json");
+		glossaryRoot = parser.parse(new InputStreamReader(glossaryJsonStream));
+		InputStream menuJsonStream = JPathTest.class.getResourceAsStream("menu.json");
+		menuRoot = parser.parse(new InputStreamReader(menuJsonStream));
 	}
 }
