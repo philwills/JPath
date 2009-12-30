@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import java.util.List;
 import java.util.Arrays;
 
-public class ArrayAccessQueryToken implements QueryToken {
+class ArrayAccessQueryToken implements QueryToken {
 	private String identifier;
 	private Integer index;
 

@@ -4,6 +4,6 @@ import com.google.gson.JsonElement;
 
 import java.util.List;
 
-public interface QueryToken {
+interface QueryToken {
 	List<JsonElement> navigate(JsonElement currentElement);
 }
