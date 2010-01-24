@@ -1,0 +1,31 @@
+JPath is a library for extracting just the pieces of information you need from someone else's JSON
+
+Examples:
+
+------------------------------------------------------------------------------
+Extract a single string from JSON with javascript style syntax:
+
+import static com.gu.jpath.Navigator.*;
+
+String crumbly = from("{\"wensleydale\":{\"texture\": \"crumbly\"}}").stringAt("wensleydale.texture");
+
+------------------------------------------------------------------------------
+Extract multiple strings from JSON using star
+
+List<String> menuItems = from(this.class.getResourceAsStream("menu.json")).stringsAt("menu.popup.menuitem[*].value");
+
+"New", "Open", "Close"
+
+menu.json:
+
+{"menu": {
+  "id": "file",
+  "value": "File",
+  "popup": {
+    "menuitem": [
+      {"value": "New", "onclick": "CreateNewDoc()"},
+      {"value": "Open", "onclick": "OpenDoc()"},
+      {"value": "Close", "onclick": "CloseDoc()"}
+    ]
+  }
+}}
