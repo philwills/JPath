@@ -3,7 +3,7 @@ package com.gu.jpath;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.*;
 
 import static com.gu.jpath.Navigator.*;
 
@@ -15,6 +15,6 @@ public class NavigatorTest {
 	}
 	
 	@Test public void Extract_multiple_strings_from_JSON_using_star() {
-		assertThat(from(NavigatorTest.class.getResourceAsStream("menu.json")).stringsAt("menu.popup.menuitem[*].value"), equalTo(asList("New", "Open", "Close")));
+		assertThat(from(NavigatorTest.class.getResourceAsStream("menu.json")).stringsAt("menu.popup.menuitem[*].value"), hasItems("New", "Open", "Close"));
 	}
 }

@@ -2,13 +2,19 @@ package com.gu.jpath;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.common.base.Function;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 import java.io.*;
 
+import static com.google.common.collect.Iterables.*;
+
 public class Navigator {
+	private static Function<JsonElement, String> stringify = new Function<JsonElement, String>(){
+		public String apply(JsonElement element) { return element.getAsString(); } 
+	};
+
 	private JsonElement root;
 
 	public Navigator(String json) {
@@ -31,12 +37,8 @@ public class Navigator {
 		return new JPath(path).from(root).get(0).getAsString();
 	}
 	
-	public List<String> stringsAt(String path) {
-		List<String> strings = new ArrayList<String>();
-		for (JsonElement element:  new JPath(path).from(root)) {
-			strings.add(element.getAsString());
-		}
-		return strings;
+	public Iterable<String> stringsAt(String path) {
+		return transform(new JPath(path).from(root), stringify);
 	}
 
 	public static Navigator from(String json) {
