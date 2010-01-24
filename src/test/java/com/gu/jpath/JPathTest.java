@@ -34,13 +34,13 @@ public class JPathTest {
 	@Test public void shouldFindAllJSONContentInArrayElement() {
 		JPath jPath = new JPath("glossary.GlossDiv.GlossList.GlossEntry.GlossDef.GlossSeeAlso[*]");
 
-		assertThat(jPath.elementsFrom(glossaryRoot), equalTo(Arrays.asList((JsonElement)new JsonPrimitive("GML"), new JsonPrimitive("XML"))));
+		assertThat(jPath.from(glossaryRoot), equalTo(Arrays.asList((JsonElement)new JsonPrimitive("GML"), new JsonPrimitive("XML"))));
 	}
 	
 	@Test public void shouldFindAllElementsFromNodesInsideArrayElements() {
 		JPath jPath = new JPath("menu.popup.menuitem[*].value");
 
-		assertThat(jPath.elementsFrom(menuRoot), equalTo(Arrays.asList((JsonElement)new JsonPrimitive("New"), new JsonPrimitive("Open"), new JsonPrimitive("Close"))));	
+		assertThat(jPath.from(menuRoot), equalTo(Arrays.asList((JsonElement)new JsonPrimitive("New"), new JsonPrimitive("Open"), new JsonPrimitive("Close"))));	
 	}
 
 	@Before	public void buildJSON() {
