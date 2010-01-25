@@ -2,6 +2,9 @@ package com.gu.jpath;
 
 import org.junit.Test;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.Matchers.*;
 
@@ -21,5 +24,9 @@ public class NavigatorTest {
 	
 	@Test public void Extract_int_from_JSON() {
 		assertThat(from(NavigatorTest.class.getResourceAsStream("widget.json")).intAt("widget.window.width"), equalTo(500));
+	}
+	
+	@Test public void Get_the_raw_GSON_element() {
+		assertThat(from(NavigatorTest.class.getResourceAsStream("widget.json")).elementAt("widget.window.width"), equalTo((JsonElement)new JsonPrimitive(500)));
 	}
 }

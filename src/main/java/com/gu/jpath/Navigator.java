@@ -37,26 +37,26 @@ public class Navigator {
 	}
 	
 	public String stringAt(String path) {
-		return unique(path).getAsString();
+		return elementAt(path).getAsString();
 	}
 	
 	public Iterable<String> stringsAt(String path) {
-		return transform(all(path), asString);
+		return transform(elementsAt(path), asString);
 	}
 	
 	public Integer intAt(String path) {
-		return unique(path).getAsInt();
+		return elementAt(path).getAsInt();
 	}
 	
 	public Iterable<Integer> intsAt(String path) {
-		return transform(all(path), asInt);
+		return transform(elementsAt(path), asInt);
 	}
 	
-	private JsonElement unique(String path) {
-		return all(path).get(0);
+	public JsonElement elementAt(String path) {
+		return elementsAt(path).get(0);
 	}
 
-	private List<JsonElement> all(String path) {
+	public List<JsonElement> elementsAt(String path) {
 		return new JPath(path).from(root);
 	}
 	
