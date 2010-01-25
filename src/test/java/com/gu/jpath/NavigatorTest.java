@@ -17,4 +17,9 @@ public class NavigatorTest {
 	@Test public void Extract_multiple_strings_from_JSON_using_star() {
 		assertThat(from(NavigatorTest.class.getResourceAsStream("menu.json")).stringsAt("menu.popup.menuitem[*].value"), hasItems("New", "Open", "Close"));
 	}
+	
+	
+	@Test public void Extract_int_from_JSON() {
+		assertThat(from(NavigatorTest.class.getResourceAsStream("widget.json")).intAt("widget.window.width"), equalTo(500));
+	}
 }

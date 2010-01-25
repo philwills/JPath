@@ -11,8 +11,11 @@ import java.io.*;
 import static com.google.common.collect.Iterables.*;
 
 public class Navigator {
-	private static Function<JsonElement, String> stringify = new Function<JsonElement, String>(){
+	private static Function<JsonElement, String> asString = new Function<JsonElement, String>(){
 		public String apply(JsonElement element) { return element.getAsString(); } 
+	};
+	private static Function<JsonElement, Integer> asInt = new Function<JsonElement, Integer>(){
+		public Integer apply(JsonElement element) { return element.getAsInt(); } 
 	};
 
 	private JsonElement root;
@@ -34,13 +37,29 @@ public class Navigator {
 	}
 	
 	public String stringAt(String path) {
-		return new JPath(path).from(root).get(0).getAsString();
+		return unique(path).getAsString();
 	}
 	
 	public Iterable<String> stringsAt(String path) {
-		return transform(new JPath(path).from(root), stringify);
+		return transform(all(path), asString);
+	}
+	
+	public Integer intAt(String path) {
+		return unique(path).getAsInt();
+	}
+	
+	public Iterable<Integer> intsAt(String path) {
+		return transform(all(path), asInt);
+	}
+	
+	private JsonElement unique(String path) {
+		return all(path).get(0);
 	}
 
+	private List<JsonElement> all(String path) {
+		return new JPath(path).from(root);
+	}
+	
 	public static Navigator from(String json) {
 		return new Navigator(json);
 	}
