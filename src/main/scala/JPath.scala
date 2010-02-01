@@ -1,10 +1,7 @@
-package com.gu.jpath;
+package com.gu.jpath
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import org.antlr.runtime.ANTLRStringStream;
-import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.RecognitionException;
 
 import java.io.Reader;
 import java.io.StringReader;
