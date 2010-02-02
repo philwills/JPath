@@ -1,0 +1,11 @@
+package com.gu.jpath;
+
+import com.google.gson.JsonElement;
+
+import java.util.List;
+
+public class JPath {
+	JPath(String path) {}
+	
+	List<JsonElement> from(JsonElement element) { return null; }
+}
