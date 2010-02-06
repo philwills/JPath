@@ -1,4 +1,4 @@
-package com.gu.jsonpath
+package com.gu.jpath
 
 import org.scalatest.junit._
 import org.junit.Test

@@ -22,13 +22,13 @@ public class JPathTest {
 	@Test public void shouldFindJSONContentBasedOnPath() {
 		JPath jPath = new JPath("glossary.title");
 
-		assertThat(jPath.elementFrom(glossaryRoot).getAsString(), equalTo("example glossary"));
+		assertThat(jPath.from(glossaryRoot).get(0).getAsString(), equalTo("example glossary"));
 	}
 
 	@Test public void shouldFindJSONContentInArrayElement() {
 		JPath jPath = new JPath("glossary.GlossDiv.GlossList.GlossEntry.GlossDef.GlossSeeAlso[1]");
 
-		assertThat(jPath.elementFrom(glossaryRoot).getAsString(), equalTo("XML"));
+		assertThat(jPath.from(glossaryRoot).get(0).getAsString(), equalTo("XML"));
 	}
 	
 	@Test public void shouldFindAllJSONContentInArrayElement() {
