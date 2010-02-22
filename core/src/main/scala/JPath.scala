@@ -20,10 +20,10 @@ class JPath(path: String) {
 		
 		for (token <- queryTokens) {
 			currentElements = foundElements
-			foundElements = List[JsonElement]()
-			for (element <- currentElements) {
-				foundElements = foundElements ++ token.navigate(element)
-			}
+			foundElements = for {
+				element <- currentElements
+				navigatedElement <- token.navigate(element)
+			} yield navigatedElement
 		}
 		
 		scala2JavaList(foundElements)
