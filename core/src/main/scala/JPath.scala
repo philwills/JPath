@@ -15,18 +15,20 @@ class JPath(path: String) {
 	val queryTokens = JsonArgoGrammar.tokens(path)
 
 	def from(element: JsonElement) = {
-		var currentElements = List[JsonElement]()
-		var foundElements = List(element)
-		
-		for (token <- queryTokens) {
-			currentElements = foundElements
-			foundElements = for {
-				element <- currentElements
-				navigatedElement <- token.navigate(element)
-			} yield navigatedElement
-		}
+		val foundElements = descend(queryTokens, element)
 		
 		scala2JavaList(foundElements)
+	}
+	
+	def descend(tokens: List[QueryToken], element: JsonElement) : List[JsonElement] = {
+		if (tokens.isEmpty) 
+			List(element) 
+		else {
+			for { 
+				navigatedElement <- tokens.head.navigate(element)
+				descendedElement <- descend(tokens.drop(1), navigatedElement)
+			} yield descendedElement
+		}
 	}
 	
 	def scala2JavaList(scalaList: List[JsonElement]): java.util.List[JsonElement] = {
