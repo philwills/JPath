@@ -8,13 +8,13 @@ object JsonArgoGrammar extends RegexParsers {
 	
 	def queryToken = wholeArrayQueryToken | arrayAccessQueryToken | directAccessQueryToken
 	
-	def wholeArrayQueryToken = identifier <~ "[*]" ^^ { id => new WholeArrayQueryToken(id) }
+	def wholeArrayQueryToken = identifier <~ "[*]" ^^ { id => QueryToken.all(id) }
 	
 	def arrayAccessQueryToken = identifier ~ arrayIndex ^^ { 
-		case ident ~ index => new ArrayAccessQueryToken(ident, index)
+		case ident ~ index => QueryToken(ident, index)
 	} 
 	
-	def directAccessQueryToken = identifier ^^ { id =>  new DirectAccessQueryToken(id) }
+	def directAccessQueryToken = identifier ^^ { id =>  QueryToken(id) }
 	
 	def arrayIndex = "[" ~> digits <~ "]"
 	

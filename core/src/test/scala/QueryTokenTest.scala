@@ -11,7 +11,7 @@ class DirectAccessQueryTokenTest extends JUnitSuite with ShouldMatchersForJUnit 
 		val jsonObject = new JsonObject()
 		jsonObject.addProperty("number", 42)
 
-		val queryToken = new DirectAccessQueryToken("number")
+		val queryToken = QueryToken("number")
 
 		queryToken.navigate(jsonObject)(0).getAsInt() should be (42)
 	}
@@ -26,7 +26,7 @@ class ArrayAccessQueryTokenTest extends JUnitSuite with ShouldMatchersForJUnit {
 		jsonArray.add(jsonLeaf)
 		jsonRoot.add("array", jsonArray)
 
-		val queryToken = new ArrayAccessQueryToken("array", 0)
+		val queryToken = QueryToken("array", 0)
 
 		queryToken.navigate(jsonRoot)(0) should be (jsonLeaf)
 	}
@@ -43,7 +43,7 @@ class WholeArrayQueryTokenTest extends JUnitSuite with ShouldMatchersForJUnit {
 		jsonArray.add(jsonLeaf2);
 		jsonRoot.add("array", jsonArray);
 
-		val queryToken = new WholeArrayQueryToken("array");
+		val queryToken = QueryToken.all("array");
 
 		queryToken.navigate(jsonRoot) should be (List(jsonLeaf, jsonLeaf2))
 	}
