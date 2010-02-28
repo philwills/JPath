@@ -6,14 +6,14 @@ class JPath(path: String) {
 	val queryTokens = JsonArgoGrammar.tokens(path)
 
 	def from(startElement: JsonElement) : java.util.List[JsonElement] = {
-		def descend(tokens: List[QueryToken], element: JsonElement) : List[JsonElement] = {
-			if (tokens isEmpty) List(element) else {
-				for { 
-					navigatedElement <- tokens.head.navigate(element)
-					descendedElement <- descend(tokens.tail, navigatedElement)
-				} yield descendedElement
+		def descend(tokens: List[QueryToken], element: JsonElement) : List[JsonElement] = 
+			tokens match {
+				case List() => List(element) 
+				case topToken :: remainingTokens => for { 
+						navigatedElement <- topToken.navigate(element)
+						descendedElement <- descend(remainingTokens, navigatedElement)
+					} yield descendedElement
 			}
-		}
 		descend(queryTokens, startElement)
 	}
 	
